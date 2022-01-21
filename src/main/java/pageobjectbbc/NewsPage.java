@@ -1,21 +1,18 @@
 package pageobjectbbc;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.By.xpath;
 
 public class NewsPage extends BasePage {
 
+    private static final long DEFAULT_WAITING_TIME = 60;
     private static final String HEADLINE_ARTICLE_TITLE = "//div[contains(@class,'gs-c-promo-body gs-u-display-none gs-u-display-inline-block@m gs-u-mt@xs gs-u-mt0@m gel-1/3@m')]//a[contains(@class,'gs-c-promo-heading gs-o-faux-block-link__overlay-link gel-paragon-bold nw-o-link-split__anchor')]";
     private static final String SECONDARY_ARTICLES_TITLE_LIST = "//h3[@class= 'gs-c-promo-heading__title gel-pica-bold nw-o-link-split__text']";
     private static final String HEADLINE_ARTICLE_TITLE_CATEGORY = "//div[contains(@class,'gs-c-promo-body gs-u-mt@xxs gs-u-mt@m gs-c-promo-body--primary gs-u-mt@xs gs-u-mt@s gs-u-mt@m gs-u-mt@xl gel-1/3@m gel-1/2@xl gel-1/1@xxl')]//a[contains(@class,'gs-c-promo-heading gs-o-faux-block-link__overlay-link gel-paragon-bold gs-u-mt+ nw-o-link-split__anchor')]//h3[@class='gs-c-promo-heading__title gel-paragon-bold gs-u-mt+ nw-o-link-split__text']";
@@ -30,7 +27,7 @@ public class NewsPage extends BasePage {
     private static final String TERMS_OF_SERVICE = "//input[@type= 'checkbox']";
     private static final String SUBMIT_BUTTON = "//div[@class= 'embed-content-container']//button[@class = 'button']";
     private static final String ERROR_MESSAGE = "//div[@class= 'input-error-message']";
-    private static final String NEWS_PAGE_TITLE = "//div[contains(@class,'nw-c-news-navigation')]";
+    private static final String SEND_QUESTION_FORM_HEADING = "//h1[@id = 'main-heading']";
 
     Actions action = new Actions(driver);
     JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -55,50 +52,35 @@ public class NewsPage extends BasePage {
         return secondaryArticlesTitlesListText;
     }
 
-    public void navigateToNewsByCategoryLink() {
+    public void moveToNewsByCategoryLink() {
         WebElement categoryLink = driver.findElement(xpath(CATEGORY_LINK));
         String categoryLinkText = categoryLink.getAttribute("href");
         driver.navigate().to(categoryLinkText);
     }
 
-    public void clickOnCoronavirusMenuItem() {
+    public void clickCoronavirusMenuItem() {
         driver.findElement(xpath(CORONAVIRUS_MENU_ITEM)).click();
     }
 
-    public void clickOnYourCoronavirusStoriesMenuItem() {
+    public void clickYourCoronavirusStoriesMenuItem() {
         driver.findElement(xpath(YOUR_CORONAVIRUS_STORIES_MENU_ITEM)).click();
     }
 
-    public void moveToYourQuestionsAnsweredElement() {
-        //JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebElement sendUsQuestionLink = driver.findElement(xpath(YOUR_QUESTIONS_ANSWERED));
-        js.executeScript("arguments[0].scrollIntoView();", sendUsQuestionLink);
-    }
-
-    public void clickOnYourQuestionsAnswered() {
-        driver.findElement(xpath(YOUR_QUESTIONS_ANSWERED)).click();
-    }
-
-    public void moveToSendUsQuestionForm() {
-        //JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebElement sendUsQuestionForm = driver.findElement(xpath(SEND_US_QUESTION_FORM));
-        js.executeScript("arguments[0].scrollIntoView();", sendUsQuestionForm);
+    public WebElement getSendUsQuestionLink() {
+        return driver.findElement(xpath(YOUR_QUESTIONS_ANSWERED));
     }
 
     public void fillQuestionField(String questionText) {
-        //Actions action = new Actions(driver);
         WebElement questionField = driver.findElement(xpath(QUESTION_FIELD));
         action.sendKeys(questionField, questionText).build().perform();
     }
 
     public void fillNameField(String nameText) {
-        //Actions action = new Actions(driver);
         WebElement nameField = driver.findElement(xpath(NAME_FIELD));
         action.sendKeys(nameField, nameText).build().perform();
     }
 
     public void fillEmailField(String emailText) {
-        //Actions action = new Actions(driver);
         WebElement emailField = driver.findElement(xpath(EMAIL_FIELD));
         action.sendKeys(emailField, emailText).build().perform();
     }
@@ -109,10 +91,6 @@ public class NewsPage extends BasePage {
 
     public void clickSubmitButton() {
         driver.findElement(xpath(SUBMIT_BUTTON)).click();
-    }
-
-    public String getErrorMessageText() {
-        return driver.findElement(xpath(ERROR_MESSAGE)).getText();
     }
 
     public String getNameFieldContent() {
@@ -131,41 +109,17 @@ public class NewsPage extends BasePage {
         return errorMessagesListText;
     }
 
-    public WebElement getNewsPageTitle() {
-        return driver.findElement(xpath(NEWS_PAGE_TITLE));
-    }
-
     public WebElement getHeadlineArticleCategory() {
         return driver.findElement(xpath(HEADLINE_ARTICLE_TITLE_CATEGORY));
     }
 
-    public void clickCoronavirusMenuItem() {
-        driver.findElement(xpath(CORONAVIRUS_MENU_ITEM)).click();
-
-    }
-
-    public void clickYourCoronavirusStoriesMenuItem() {
-        driver.findElement(xpath(YOUR_CORONAVIRUS_STORIES_MENU_ITEM)).click();
-
-    }
-
     public void clickSendUsQuestionLink() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebElement sendUsQuestionLink = driver.findElement(xpath(YOUR_QUESTIONS_ANSWERED));
-        js.executeScript("arguments[0].scrollIntoView();", sendUsQuestionLink);
-        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-        driver.findElement(xpath(YOUR_QUESTIONS_ANSWERED)).click();
+        js.executeScript("arguments[0].scrollIntoView();", getSendUsQuestionLink());
+        implicitWait(DEFAULT_WAITING_TIME);
+        getSendUsQuestionLink().click();
     }
 
-//    public void fillSendUsQuestionForm(String questionText, String nameText, String emailText) {
-//        Map<String, String> dictionary = new HashMap<String, String>();
-//        dictionary.put(QUESTION_FIELD, questionText);
-//        dictionary.put(NAME_FIELD, nameText);
-//        dictionary.put(EMAIL_FIELD, emailText);
-//    }
-
-    public void navigateToSendUsQuestionForm() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+    public void moveToSendUsQuestionForm() {
         WebElement sendUsQuestionForm = driver.findElement(xpath(SEND_US_QUESTION_FORM));
         js.executeScript("arguments[0].scrollIntoView();", sendUsQuestionForm);
     }
@@ -176,6 +130,10 @@ public class NewsPage extends BasePage {
         fillEmailField(email);
         clickTermsOfServiceCheckbox();
         clickSubmitButton();
+    }
+
+    public WebElement getSendQuestionFormHeading() {
+        return driver.findElement(xpath(SEND_QUESTION_FORM_HEADING));
     }
 }
 

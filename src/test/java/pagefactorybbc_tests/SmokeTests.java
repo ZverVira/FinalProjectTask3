@@ -1,4 +1,4 @@
-package pageobjectbcc_tests;
+package pagefactorybbc_tests;
 
 import org.testng.annotations.Test;
 
@@ -8,6 +8,7 @@ import java.util.List;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
+
 
 public class SmokeTests extends BaseTest {
 
@@ -36,10 +37,6 @@ public class SmokeTests extends BaseTest {
             "Scottish Championship",
             "Champions League",
             "Bayern Munich");
-    private final List<String> SEARCHING_MONTH = Arrays.asList(
-            "2021-12",
-            "2021-10",
-            "2021-11");
     private final String HOME_TEAM_EXPECTED = "Kilmarnock";
     private final String AWAY_TEAM_EXPECTED = "Greenock Morton";
     private final String HOME_TEAM_SCORE_EXPECTED = "1";
@@ -192,7 +189,7 @@ public class SmokeTests extends BaseTest {
         getSportPage().clickScoresAndFixturesMenuItem();
         getSportPage().waitVisibilityOfElement(DEFAULT_WAITING_TIME, getSportPage().getChampionshipSearchField());
         getSportPage().chooseChampionShip(SEARCHING_CHAMPIONSHIP.get(0));
-        getSportPage().chooseMonthOfChampionship(SEARCHING_MONTH.get(0));
+        getSportPage().chooseMonthOfChampionship();
         getSportPage().waitClickableOfElement(DEFAULT_WAITING_TIME, getSportPage().getShowScorersButton());
         getSportPage().moveToGameFromTheList();
         assertEquals(getSportPage().getHomeTeamActual() + " " + getSportPage().getHomeTeamScoreActual() + " " + getSportPage().getAwayTeamScoreActual() + " " + getSportPage().getAwayTeamActual(), GAME_SCORE_TEAM);
@@ -206,7 +203,7 @@ public class SmokeTests extends BaseTest {
         getSportPage().clickScoresAndFixturesMenuItem();
         getSportPage().waitVisibilityOfElement(DEFAULT_WAITING_TIME, getSportPage().getChampionshipSearchField());
         getSportPage().chooseChampionShip(SEARCHING_CHAMPIONSHIP.get(0));
-        getSportPage().chooseMonthOfChampionship(SEARCHING_MONTH.get(0));
+        getSportPage().chooseMonthOfChampionship();
         getSportPage().waitClickableOfElement(DEFAULT_WAITING_TIME, getSportPage().getShowScorersButton());
         getSportPage().moveToGameFromTheList();
         String gameResultOnChampionshipPage = getSportPage().getChampionshipGameResult();
@@ -228,7 +225,7 @@ public class SmokeTests extends BaseTest {
         getSportPage().clickScoresAndFixturesMenuItem();
         getSportPage().waitVisibilityOfElement(DEFAULT_WAITING_TIME, getSportPage().getChampionshipSearchField());
         getSportPage().chooseChampionShip(SEARCHING_CHAMPIONSHIP.get(1));
-        getSportPage().chooseMonthOfChampionship(SEARCHING_MONTH.get(1));
+        getSportPage().chooseMonthOfChampionship();
         getSportPage().waitClickableOfElement(DEFAULT_WAITING_TIME, getSportPage().getShowScorersButton());
         getSportPage().moveToGameFromTheList();
         String gameResultOnChampionshipPage = getSportPage().getChampionshipGameResult();
@@ -245,7 +242,7 @@ public class SmokeTests extends BaseTest {
         getSportPage().clickScoresAndFixturesMenuItem();
         getSportPage().waitVisibilityOfElement(DEFAULT_WAITING_TIME, getSportPage().getChampionshipSearchField());
         getSportPage().chooseChampionShip(SEARCHING_CHAMPIONSHIP.get(2));
-        getSportPage().chooseMonthOfChampionship(SEARCHING_MONTH.get(2));
+        getSportPage().chooseMonthOfChampionship();
         getSportPage().waitClickableOfElement(DEFAULT_WAITING_TIME, getSportPage().getShowScorersButton());
         getSportPage().moveToGameFromTheList();
         String gameResultOnChampionshipPage = getSportPage().getChampionshipGameResult();
@@ -253,4 +250,5 @@ public class SmokeTests extends BaseTest {
         getGamePage().waitVisibilityOfElement(DEFAULT_WAITING_TIME, getGamePage().getGamePageHeader());
         assertEquals(getGamePage().getHomeTeamActual() + " " + getGamePage().getHomeTeamScoreActual() + " " + getGamePage().getAwayTeamScoreActual() + " " + getGamePage().getAwayTeamActual(), gameResultOnChampionshipPage);
     }
+
 }
