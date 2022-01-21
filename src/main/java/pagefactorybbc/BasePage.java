@@ -37,11 +37,6 @@ public class BasePage {
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
 
-    public void waitTextToBePresentInElement(long timeToWait, WebElement element, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, timeToWait);
-        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
-    }
-
     public void waitVisibilityOfElement(long timeToWait, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, timeToWait);
         wait.until(ExpectedConditions.visibilityOf(element));
