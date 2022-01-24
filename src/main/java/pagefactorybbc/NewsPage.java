@@ -163,5 +163,4 @@ public class NewsPage extends BasePage {
     public WebElement getSendQuestionFormHeading() {
         return sendUsQuestionFormHeading;
     }
-
 }

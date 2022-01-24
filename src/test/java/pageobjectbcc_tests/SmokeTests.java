@@ -12,15 +12,15 @@ import static org.testng.AssertJUnit.assertEquals;
 public class SmokeTests extends BaseTest {
 
     private static final long DEFAULT_WAITING_TIME = 60;
-    private final String EXPECTED_HEADLINE_ARTICLE_TITLE = "UN condemns Saudi-led airstrike on Yemen prison";
-    private final String EXPECTED_HEADLINE_ARTICLE_TITLE_CATEGORY = "Scores killed in Yemen prison air strike carnage";
+    private final String EXPECTED_HEADLINE_ARTICLE_TITLE = "UK withdrawing some embassy staff from Ukraine";
+    private final String EXPECTED_HEADLINE_ARTICLE_TITLE_CATEGORY = "UK warns of plot to install Russia ally in Ukraine";
     private final List<String> ACTUAL_SECONDARY_ARTICLES_TITLES = Arrays.asList(
-            "US and Russia hold 'frank' talks on Ukraine tension",
-            "'Please help, the Taliban have come to my house'",
-            "Tonga's volcanic plume reached half-way to space",
-            "Stars pay tribute to 'one-off talent' Meat Loaf",
-            "Mother sues Meta and Snap over daughter's suicide",
-            "Petito boyfriend admitted murder in journal - FBI");
+            "Navratilova blasts Peng Shuai T-shirt ban",
+            "Fashion designer Thierry Mugler dies aged 73",
+            "Man admits abducting Australian girl Cleo Smith",
+            "Burkina Faso president detained - reports",
+            "Plane stowaway found in Amsterdam survived in wheel",
+            "UK PM orders inquiry into 'Muslimness' sacking claim");
 
     private final String NAME_ERROR_MESSAGE = "Name can't be blank";
     private final String EMAIL_ERROR_MESSAGE = "Email address can't be blank";
@@ -77,7 +77,6 @@ public class SmokeTests extends BaseTest {
         getHomePage().moveToNewsPage();
         getNewsPage().implicitWait(DEFAULT_WAITING_TIME);
         getNewsPage().closeRegisterModalWindow();
-        System.out.println(getNewsPage().addSecondaryArticlesTitlesListIntoStringList());
         assertTrue(getNewsPage().addSecondaryArticlesTitlesListIntoStringList().containsAll(ACTUAL_SECONDARY_ARTICLES_TITLES));
     }
 
